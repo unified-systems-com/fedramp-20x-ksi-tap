@@ -30,11 +30,16 @@ dynamic = ["version"]
 dependencies = [
     # Regime-agnostic compliance vocabulary substrate: the compliance_view panel
     # queries compliance_core__compliance_context (req-compliance-core-migration).
-    # Lower bound 0.3.0: the release that renamed the evidence/finding edges to
-    # CITES_COMPLIANCE_EVIDENCE / CARRIES_COMPLIANCE_FINDING (req-tap-plugin-edge-naming);
-    # the panels here read the NEW slugs, and an older compliance_core would make them
-    # read nothing, silently.
-    "tap-plugin-compliance-core>=0.3.0,<0.4",
+    # Lower bound 0.4.0: matches github_core's own declared floor, which samsite's
+    # dependency closure also carries — samsite depends on both this plugin and
+    # github_core, and github_core>=0.12.0 requires compliance_core>=0.4.0,<0.5,
+    # so a <0.4 ceiling here made samsite's closure unsatisfiable (no version of
+    # compliance_core could satisfy both ranges at once). v0.4.0 is purely additive
+    # over v0.3.0 (Issue# 8 - tap-plugin-compliance-core: `source`/`source_key`
+    # identity columns + NATURAL_KEY declarations); it keeps the CITES_COMPLIANCE_EVIDENCE
+    # / CARRIES_COMPLIANCE_FINDING edge slugs this plugin reads, so the 0.3.0 rationale
+    # above still holds at the new floor.
+    "tap-plugin-compliance-core>=0.4.0,<0.5",
 ]
 
 [project.entry-points."tap.plugins"]
