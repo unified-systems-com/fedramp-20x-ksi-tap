@@ -9,7 +9,8 @@
         "source": {
           "type": "git",
           "url": "https://github.com/unified-systems-com/tap-plugin-compliance-core",
-          "rev": "v0.3.0"
+          "rev": "v0.3.0",
+          "commit": "10871675ff1c67bfac0ca61d90ee12c507fd76f4"
         },
         "note": "Declared in depends_on. Pinned at v0.3.0, the release current on 2026-09-09 (renamed edges CITES_COMPLIANCE_EVIDENCE / CARRIES_COMPLIANCE_FINDING, Issue# 6 - tap-plugin-fedramp-20x-ksi). Public repo, no credential (req-tap-plugin-arch-source-secret-5)."
       },
@@ -19,7 +20,8 @@
         "source": {
           "type": "git",
           "url": "https://github.com/unified-systems-com/tap-plugin-fedramp-20x-ksi",
-          "rev": "v0.3.1"
+          "rev": "v0.3.1",
+          "commit": "3480c74dc8e95d410e8b05fc426157a5574f1874"
         },
         "note": "Self, pinned like any app-of-apps record — the CONSUMER (plugin-ci boot-and-test, or `spawn --dev-plugins fedramp_20x_ksi`) substitutes the checkout under test via tap.dev_workspace (req-boot-bootstrap-ci-record-4). Booting this record unflipped runs the pinned revision."
       }
