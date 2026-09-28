@@ -8,7 +8,7 @@
 #
 # Identity chain (req-plugin-arch-identity — all four MUST agree, gate-enforced):
 #   slug             = "fedramp_20x_ksi"                     (tap-plugin.toml slug)
-#   distribution     = "tap-plugin-fedramp-20x-ksi"          (PEP 503: slug `_`->`-`, `tap-plugin-` prefix)
+#   distribution     = "fedramp-20x-ksi-tap"          (PEP 503: slug `_`->`-`, `-tap` suffix)
 #   import namespace = "tap_plugin.fedramp_20x_ksi"          (PEP 420 native namespace; NO tap_plugin/__init__.py)
 #   entry-point key  = "fedramp_20x_ksi"                     (== slug)
 #
@@ -17,7 +17,7 @@
 # from the boot profile's `install` section (req-boot-install-section). That
 # separation is the whole point of the refactor.
 [project]
-name = "tap-plugin-fedramp-20x-ksi"
+name = "fedramp-20x-ksi-tap"
 description = "TAP FedRAMP 20x KSI plugin — KSI catalog, findings, and compliance surfaces for the samsite demo."
 requires-python = ">=3.14"
 dynamic = ["version"]
