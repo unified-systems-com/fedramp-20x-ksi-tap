@@ -1,4 +1,4 @@
-# tap-plugin-fedramp-20x-ksi
+# fedramp-20x-ksi-tap
 
 TAP plugin modeling the [FedRAMP 20x Key Security Indicators](https://www.fedramp.gov/docs/20x/key-security-indicators/) catalog as graph nodes — themes and individual indicators — so evidence, observations, and compliance posture can attach to them in TAP.
 
