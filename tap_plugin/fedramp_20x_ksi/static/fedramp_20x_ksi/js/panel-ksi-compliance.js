@@ -399,13 +399,21 @@
         container.className = "ksi-group-header";
 
         // Theme icon.
-        if (themeRow && themeRow.theme_icon_url) {
+        // theme_icon_url is grid data: use it only as a same-origin path ("/x"), never
+        // javascript:, data:, an absolute URL, or protocol-relative "//host" (or "/\host").
+        var safeIconUrl =
+          themeRow && /^\/(?![\/\\])/.test(String(themeRow.theme_icon_url || ""));
+        var iconSlug =
+          themeRow && themeRow.theme_short_name
+            ? String(themeRow.theme_short_name).toLowerCase().replace(/[^a-z0-9-]/g, "")
+            : "";
+        if (safeIconUrl) {
           var img = document.createElement("img");
           img.src = themeRow.theme_icon_url;
           img.alt = "";
           img.className = "ksi-group-icon";
           container.appendChild(img);
-        } else if (themeRow && themeRow.theme_short_name && iconsBase) {
+        } else if (iconSlug && /^[a-z0-9-]+$/.test(iconSlug) && iconsBase) {
           var img2 = document.createElement("img");
           // Slug-sanitize before building the URL: theme_short_name is grid data, and a
           // hostile value could otherwise steer the src (path traversal / absolute URL).
@@ -414,7 +422,7 @@
           img2.src =
             iconsBase +
             "ksi-" +
-            themeRow.theme_short_name.toLowerCase().replace(/[^a-z0-9-]/g, "") +
+            iconSlug +
             ".svg";
           img2.alt = "";
           img2.className = "ksi-group-icon";
