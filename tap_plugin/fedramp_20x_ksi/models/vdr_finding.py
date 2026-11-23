@@ -4,6 +4,7 @@ from typing import Any, ClassVar
 
 from django.db import models
 
+from tap_grid.event_time import Moment
 from tap_grid.models import BaseModel
 
 
@@ -70,6 +71,9 @@ class VdrFinding(BaseModel):
         "remediation_sla_days": {"validation": "jsonschema", "schema": {"type": ["integer", "null"]}},
     }
     CREATE_REQUIRED: ClassVar[list[str]] = ["name", "tracking_id"]
+
+    # Event time: first detection, zoned ISO 8601 text (rule 13); remediation_due_at is a deadline.
+    EVENT_TIME: ClassVar[Moment] = Moment("first_detected", "first_seen")
 
     name = models.CharField(max_length=255, blank=True, default="")
     tracking_id = models.CharField(max_length=512, blank=True, default="", db_index=True)

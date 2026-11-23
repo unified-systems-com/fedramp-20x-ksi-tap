@@ -4,6 +4,7 @@ from typing import Any, ClassVar
 
 from django.db import models
 
+from tap_grid.event_time import Moment
 from tap_grid.models import BaseModel
 
 
@@ -57,6 +58,9 @@ class VdrReport(BaseModel):
         "summary": {"validation": "jsonschema", "schema": {"type": "object"}},
     }
     CREATE_REQUIRED: ClassVar[list[str]] = ["name", "report_id"]
+
+    # Event time: when the report was emitted, ISO 8601 text with a UTC offset.
+    EVENT_TIME: ClassVar[Moment] = Moment("emitted_at", "published")
 
     name = models.CharField(max_length=255, blank=True, default="")
     report_version = models.CharField(max_length=32, blank=True, default="")

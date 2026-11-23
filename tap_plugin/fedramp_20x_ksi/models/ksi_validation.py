@@ -4,6 +4,7 @@ from typing import Any, ClassVar
 
 from django.db import models
 
+from tap_grid.event_time import NO_EVENT_TIME, NoEventTime
 from tap_grid.models import BaseModel
 
 
@@ -44,6 +45,9 @@ class KsiValidation(BaseModel):
         "result": {"validation": "jsonschema", "schema": {"type": "string", "enum": _RESULT_VALUES}},
     }
     CREATE_REQUIRED: ClassVar[list[str]] = ["name", "validation_id"]
+
+    # Event time: none. A validations[] entry has no time; it is the parent signal's emitted_at.
+    EVENT_TIME: ClassVar[NoEventTime] = NO_EVENT_TIME
 
     name = models.CharField(max_length=255, blank=True, default="")
     validation_id = models.CharField(max_length=255, blank=True, default="", db_index=True)

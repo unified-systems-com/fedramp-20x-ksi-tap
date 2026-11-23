@@ -4,6 +4,7 @@ from typing import Any, ClassVar
 
 from django.db import models
 
+from tap_grid.event_time import NO_EVENT_TIME, NoEventTime
 from tap_grid.models import BaseModel
 
 
@@ -83,6 +84,9 @@ class KsiIndicator(BaseModel):
         },
     }
     CREATE_REQUIRED: ClassVar[list[str]] = ["code", "name", "classes", "status"]
+
+    # Event time: none. No creation time in the source; updated_log is a list of revision dates.
+    EVENT_TIME: ClassVar[NoEventTime] = NO_EVENT_TIME
 
     code = models.CharField(max_length=16, blank=True, default="", db_index=True)
     name = models.CharField(max_length=255, blank=True, default="")
