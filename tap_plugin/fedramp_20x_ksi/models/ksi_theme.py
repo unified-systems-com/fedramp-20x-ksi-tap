@@ -4,6 +4,7 @@ from typing import Any, ClassVar
 
 from django.db import models
 
+from tap_grid.event_time import NO_EVENT_TIME, NoEventTime
 from tap_grid.models import BaseModel
 
 
@@ -51,6 +52,9 @@ class KsiTheme(BaseModel):
         },
     }
     CREATE_REQUIRED: ClassVar[list[str]] = ["code", "name", "short_name", "web_name"]
+
+    # Event time: none. A theme is a catalog heading; the FRMR source gives it no time.
+    EVENT_TIME: ClassVar[NoEventTime] = NO_EVENT_TIME
 
     code = models.CharField(max_length=8, blank=True, default="", db_index=True)
     name = models.CharField(max_length=255, blank=True, default="")

@@ -4,6 +4,7 @@ from typing import Any, ClassVar
 
 from django.db import models
 
+from tap_grid.event_time import NO_EVENT_TIME, NoEventTime
 from tap_grid.models import BaseModel
 
 
@@ -56,6 +57,9 @@ class KsiComponent(BaseModel):
         "information_flow": {"validation": "jsonschema", "schema": {"type": "array"}},
     }
     CREATE_REQUIRED: ClassVar[list[str]] = ["name", "component_id"]
+
+    # Event time: none. A components[] entry has no time; the emission time is the signal's.
+    EVENT_TIME: ClassVar[NoEventTime] = NO_EVENT_TIME
 
     name = models.CharField(max_length=255, blank=True, default="")
     component_id = models.CharField(max_length=255, blank=True, default="", db_index=True)

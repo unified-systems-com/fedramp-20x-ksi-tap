@@ -4,6 +4,7 @@ from typing import Any, ClassVar
 
 from django.db import models
 
+from tap_grid.event_time import Moment
 from tap_grid.models import BaseModel
 
 
@@ -79,6 +80,9 @@ class KsiSignal(BaseModel):
         "signature_verified": {"validation": "jsonschema", "schema": {"type": ["boolean", "null"]}},
     }
     CREATE_REQUIRED: ClassVar[list[str]] = ["name", "signal_id"]
+
+    # Event time: when the signal was emitted, RFC 3339 text (schema format date-time).
+    EVENT_TIME: ClassVar[Moment] = Moment("emitted_at", "published")
 
     name = models.CharField(max_length=255, blank=True, default="")
     signal_version = models.CharField(max_length=32, blank=True, default="")

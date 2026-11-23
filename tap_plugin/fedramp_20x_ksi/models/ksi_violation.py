@@ -4,6 +4,7 @@ from typing import Any, ClassVar
 
 from django.db import models
 
+from tap_grid.event_time import NO_EVENT_TIME, NoEventTime
 from tap_grid.models import BaseModel
 
 
@@ -48,6 +49,9 @@ class KsiViolation(BaseModel):
         "severity": {"validation": "jsonschema", "schema": {"type": "string", "enum": _SEVERITY_VALUES}},
     }
     CREATE_REQUIRED: ClassVar[list[str]] = ["name"]
+
+    # Event time: none. A violation entry has no time; it is the parent signal's emitted_at.
+    EVENT_TIME: ClassVar[NoEventTime] = NO_EVENT_TIME
 
     name = models.CharField(max_length=255, blank=True, default="")
     violation_type = models.CharField(max_length=128, blank=True, default="", db_index=True)
