@@ -1,5 +1,5 @@
 manifest_version = "0"
-plugin_version = "0.4.3" # x-release-please-version
+plugin_version = "0.4.4" # x-release-please-version
 requires_tap = ">=0.4.9"
 slug = "fedramp_20x_ksi"
 name = "FedRAMP 20x KSI"
@@ -41,4 +41,4 @@ ksi_schedule = "grift/ksi-schedule.grift.json"
 [[boot.records]]
 name = "ci"
 description = "RESERVED NAME (req-boot-bootstrap-ci-record): the stack this plugin's own tests run in — depends_on closure + self, offline, credential-free. The consumer flips self to editable."
-sha256 = "906f68d1b37b77943a2ac560a08396ae08649569c5358fdf11f78c112bc7b122"
+sha256 = "3e28b96874487cf75e213ded4564fa0c6751df24fe31f0cb0d5c9df6ff48db63"
