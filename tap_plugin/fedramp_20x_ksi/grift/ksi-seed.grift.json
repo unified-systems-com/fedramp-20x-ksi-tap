@@ -1,6 +1,13 @@
 {
   "metadata": {
-    "grift_version": "0"
+    "grift_version": "1",
+    "spine_version": 1,
+    "type_versions": {
+      "CONTAINS_INDICATOR__fedramp_20x_ksi": 1,
+      "batch": 1,
+      "fedramp_20x_ksi__ksi_indicator": 1,
+      "fedramp_20x_ksi__ksi_theme": 1
+    }
   },
   "_reserved": {},
   "batches": [
