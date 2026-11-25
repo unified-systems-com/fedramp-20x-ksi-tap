@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.5](https://github.com/unified-systems-com/fedramp-20x-ksi-tap/compare/v0.4.4...v0.4.5) (2026-11-25)
+
+
+### Bug Fixes
+
+* **grift:** write the format "1" header from core's build_header in the KSI catalog collector ([319bcc9](https://github.com/unified-systems-com/fedramp-20x-ksi-tap/commit/319bcc9c083e9e8e2ac9635e716a03669309a837))
+* **grift:** write the format "1" header from core's build_header in the KSI catalog collector ([6f7264c](https://github.com/unified-systems-com/fedramp-20x-ksi-tap/commit/6f7264c4148b7b8ab77e95fdfd9f42f965aaf2dd))
+
 ## [0.4.4](https://github.com/unified-systems-com/fedramp-20x-ksi-tap/compare/v0.4.3...v0.4.4) (2026-11-24)
 
 
