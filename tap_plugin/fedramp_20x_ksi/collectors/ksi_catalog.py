@@ -50,6 +50,7 @@ from tap_cares.collectors import (
     check_fail,
     check_pass,
 )
+from tap_grid.grift.upgrade import build_header
 
 # ---------------------------------------------------------------------------
 # Pinned assets and constants
@@ -834,7 +835,11 @@ class KSICollector(CollectorBase):
             "nodes": nodes,
             "edges": edges,
         }
-        return {"metadata": {"grift_version": "0"}, "_reserved": {}, "batches": [batch]}
+        document: dict[str, Any] = {"_reserved": {}, "batches": [batch]}
+        # Format "1" header: the spine version and every carried type's version, read from this
+        # grid's catalog once the batch is complete. Core refuses format "0" documents from 0.5.0.
+        document["metadata"] = build_header(document)
+        return document
 
     def _theme_node(self, code: str, state: dict[str, Any]) -> dict[str, Any]:
         return {
