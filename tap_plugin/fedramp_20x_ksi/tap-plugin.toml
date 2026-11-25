@@ -41,4 +41,4 @@ ksi_schedule = "grift/ksi-schedule.grift.json"
 [[boot.records]]
 name = "ci"
 description = "RESERVED NAME (req-boot-bootstrap-ci-record): the stack this plugin's own tests run in — depends_on closure + self, offline, credential-free. The consumer flips self to editable."
-sha256 = "dfc20c92ba7734338e8ad110db0623bedc7b77885e7d738781c4196d1954d722"
+sha256 = "a5b276d9cb06661c9f0eb28c54c5ab4cf6039534b22aeab37e03f508c52da2cd"
