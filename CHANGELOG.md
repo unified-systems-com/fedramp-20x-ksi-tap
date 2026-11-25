@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.6](https://github.com/unified-systems-com/fedramp-20x-ksi-tap/compare/v0.4.5...v0.4.6) (2026-11-25)
+
+
+### Bug Fixes
+
+* ship the history event-time migration on the tap v0.5.0 floor ([79b2e52](https://github.com/unified-systems-com/fedramp-20x-ksi-tap/commit/79b2e52a085b336307562f609e73b383a12f2eba))
+* ship the history event-time migration on the tap v0.5.0 floor ([bd129a9](https://github.com/unified-systems-com/fedramp-20x-ksi-tap/commit/bd129a91650ec2d057d9fc28f13fe2951fe1f251))
+
 ## [0.4.5](https://github.com/unified-systems-com/fedramp-20x-ksi-tap/compare/v0.4.4...v0.4.5) (2026-11-25)
 
 
