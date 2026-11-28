@@ -42,8 +42,10 @@ from uuid import UUID, uuid5, uuid7
 import jsonschema
 
 from tap.jsonfiles import load_schema, validate_json
+from tap_cares import NOT_CONFIGURABLE
 from tap_cares.collectors import (
     CollectorBase,
+    CollectorConfig,
     CollectorDocRef,
     CollectorReadinessStatus,
     CollectorSelfTestResult,
@@ -201,6 +203,14 @@ def _append_ksi_reachability_check(
 class KSICollector(CollectorBase):
     """KSI catalog collector. See module docstring for pipeline overview."""
 
+    # No settings and no secret: its plugin seeds its one configuration
+    # (grift/run-configuration.grift.json, req-tap-cares-runconfig-not-configurable-1).
+    RUN_CONFIGURATION = NOT_CONFIGURABLE
+    # One run at a time (req-tap-cares-runconfig-concurrency-1): overlapping runs would race the same
+    # grid writes. Across configurations is moot with one configuration, and declared all the same.
+    OVERLAP_WITHIN_CONFIGURATION = False
+    OVERLAP_ACROSS_CONFIGURATIONS = False
+
     # Override points for tests. Subclasses (or test fixtures) can replace
     # _fetch_upstream_bytes to inject canned content without touching the
     # network.
@@ -208,7 +218,7 @@ class KSICollector(CollectorBase):
     # -- Public entrypoint ---------------------------------------------------
 
     @classmethod
-    def self_test(cls) -> CollectorSelfTestResult:
+    def self_test(cls, config: CollectorConfig) -> CollectorSelfTestResult:
         checks = []
         docs = (
             CollectorDocRef(

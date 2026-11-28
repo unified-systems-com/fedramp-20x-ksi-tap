@@ -1,0 +1,67 @@
+{
+  "metadata": {
+    "grift_version": "1",
+    "spine_version": 1,
+    "type_versions": {
+      "CONFIGURES": 1,
+      "batch": 1,
+      "collector": 2,
+      "run_configuration": 1
+    }
+  },
+  "_reserved": {},
+  "batches": [
+    {
+      "batch_entity": {
+        "entity_id": "01a222e8-7608-72a1-98b1-9cdcfdb62478",
+        "entity_type": "batch",
+        "name": "fedramp_20x_ksi run configurations v0",
+        "dimensions": {}
+      },
+      "batch_node": {
+        "source": "tap_plugin.fedramp_20x_ksi.grift.run-configuration",
+        "name": "fedramp_20x_ksi run configurations v0",
+        "description": "The plugin's not-configurable run configurations, one per collector (req-tap-cares-runconfig-not-configurable-1): no settings and no secret, so each collector runs exactly as before. Schedules target these, not the collectors (req-tap-cares-runconfig-selection-1)."
+      },
+      "nodes": [
+        {
+          "entity": {
+            "entity_id": "01a222e8-7608-72a1-98b1-9cdbb93b9112",
+            "entity_type": "run_configuration",
+            "name": "FedRAMP 20x KSI Catalog",
+            "dimensions": {
+              "tap_cares": "run_configuration"
+            }
+          },
+          "node": {
+            "name": "FedRAMP 20x KSI Catalog",
+            "description": "The KSI catalog collector's only configuration; it has nothing to configure.",
+            "configurability": "not_configurable",
+            "settings": {},
+            "seeded_by": "plugin:fedramp_20x_ksi"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "entity": {
+            "entity_id": "01a222e8-7608-72a1-98b1-9cdd22d4f082",
+            "entity_type": "edge",
+            "dimensions": {}
+          },
+          "edge": {
+            "edge_type": "CONFIGURES",
+            "properties": {},
+            "from_entity_id": "01a222e8-7608-72a1-98b1-9cdbb93b9112",
+            "to_key": {
+              "entity_type": "collector",
+              "key": {
+                "collector_registry": "fedramp_20x_ksi:ksi-catalog"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

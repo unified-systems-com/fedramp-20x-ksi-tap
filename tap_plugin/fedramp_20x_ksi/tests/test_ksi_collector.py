@@ -26,6 +26,7 @@ from tap_plugin.fedramp_20x_ksi.collectors.ksi_catalog import (
 from tap_cares.models import CollectionJob, CollectionJobStatus, Collector
 from tap_cares.registry import collector_registry, reconcile_collector_nodes, register_collector
 from tap_cares.services import run_collection
+from tap_cares.tests.fakes import fake_config, seed_test_configurations
 from tap_grid.batch import produced_batches
 
 _FIXTURE_DIR = Path(__file__).resolve().parent / "fixtures" / "ksi_catalog"
@@ -92,6 +93,7 @@ def _register_and_fetch(
         description=description,
     )
     reconcile_collector_nodes()  # materialize the on-grid node (register is read-only)
+    seed_test_configurations()  # its one not-configurable configuration, as the plugin's seed would write it
     return Collector.objects.get(collector_registry=_TEST_REGISTRY_KEY)
 
 
@@ -124,7 +126,7 @@ def _stub_upstream_reachability(request, monkeypatch):
 
     Per the module docstring these tests run deterministically against the
     committed fixture: ``_fetch_upstream_bytes`` is overridden for the body fetch.
-    But ``KSICollector.self_test()`` makes a SEPARATE live ``urllib`` HEAD request
+    But ``KSICollector.self_test(fake_config())`` makes a SEPARATE live ``urllib`` HEAD request
     to ``UPSTREAM_URL`` for the ``UPSTREAM_REACHABLE`` readiness check, which
     ``run_collection`` gates on. Left live, every ``run_collection`` test depends on
     reaching ``raw.githubusercontent.com`` — a flaky dependency: GitHub rate-limits
@@ -153,7 +155,7 @@ def test_self_test_checks_upstream_reachability(monkeypatch):
 
     monkeypatch.setattr(ksi_module.urllib.request, "urlopen", fake_urlopen)
 
-    result = KSICollector.self_test()
+    result = KSICollector.self_test(fake_config())
 
     assert result.status.value == "ready"
     assert result.runnable is True

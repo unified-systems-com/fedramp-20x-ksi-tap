@@ -4,6 +4,8 @@ Structure-level tests only in v0 — the plugin is not yet registered in
 INSTALLED_APPS, so loads/runs-level validation is deferred until integration.
 """
 
+from pathlib import Path
+
 import pytest
 
 from tap.plugin_testing import find_plugin_source_root
@@ -48,3 +50,18 @@ class TestKsiSchedule:
         batch = self._bundle()["batches"][0]
         assert batch["batch_entity"]["entity_id"] != "019e26e8-7cc2-764a-9b66-5961337dd149"
         assert batch["nodes"][0]["entity"]["entity_id"] == "019e26e8-7cc2-764a-9b66-5962d4cd873d"
+
+
+def test_the_schedule_targets_the_seeded_configuration() -> None:
+    """A schedule targets a run configuration, never a collector (req-tap-cares-runconfig-selection-1)."""
+    import json
+
+    grift = Path(__file__).resolve().parents[1] / "grift"
+    (batch,) = json.loads((grift / "run-configuration.grift.json").read_text())["batches"]
+    (configuration,) = batch["nodes"]
+    (configures,) = batch["edges"]
+    assert configuration["node"]["configurability"] == "not_configurable" and configuration["node"]["settings"] == {}
+    assert configures["edge"]["to_key"]["key"] == {"collector_registry": "fedramp_20x_ksi:ksi-catalog"}
+    (schedule,) = json.loads((grift / "ksi-schedule.grift.json").read_text())["batches"]
+    (target,) = [e["edge"] for e in schedule["edges"] if e["edge"]["edge_type"] == "SCHEDULED_TARGET"]
+    assert target["to_entity_id"] == configuration["entity"]["entity_id"]
